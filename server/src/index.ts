@@ -6,6 +6,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 import * as dynamoose from "dynamoose"
 // ROUTE IMPORTS
+import courseRoute from "./routes/courseRoute"
 
 
 // CONFIGURATIONS
@@ -33,6 +34,9 @@ app.use(cors())
 app.get("/", (req, res) => {
     res.send("hello world")
 })
+
+app.use("/courses", courseRoute)
+
 
 
 // SERVER
