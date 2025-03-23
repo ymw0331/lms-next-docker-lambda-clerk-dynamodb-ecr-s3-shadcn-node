@@ -13,7 +13,10 @@ export const listCourses = async (
             ? await Course.scan("category").eq(category).exec()
             : await Course.scan().exec()
 
-        res.json({ message: "Courses retrieved successfully", data: courses })
+        res.json({
+            message: "Courses retrieved successfully",
+            data: courses
+        })
 
     } catch (error) {
         res.status(500).json({ message: "Error retriving courses", error })

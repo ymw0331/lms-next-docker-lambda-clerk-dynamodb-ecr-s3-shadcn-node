@@ -20,7 +20,10 @@ const listCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const courses = category && category !== "all"
             ? yield courseModel_1.default.scan("category").eq(category).exec()
             : yield courseModel_1.default.scan().exec();
-        res.json({ message: "Courses retrieved successfully", data: courses });
+        res.json({
+            message: "Courses retrieved successfully",
+            data: courses
+        });
     }
     catch (error) {
         res.status(500).json({ message: "Error retriving courses", error });

@@ -6,7 +6,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useCarousel } from '@/hooks/useCarousel'
 import { Skeleton } from '@/components/ui/skeleton'
-
+import { useGetCoursesQuery } from '@/state/api'
+import CourseCardSearch from '@/components/CourseCardSearch'
 
 const LoadingSkeleton = () => {
     return (
@@ -45,10 +46,13 @@ const LoadingSkeleton = () => {
 }
 
 
+// run 2 times, server and client sides
 const Landing = () => {
-
     const currentImage = useCarousel({ totalImages: 3 })
 
+    const { data: courses, isLoading, isError } = useGetCoursesQuery({})
+    console.log(`Get courses: `, courses)
+    // cannot use console.log in server side
 
     return (
         <motion.div
@@ -128,7 +132,17 @@ const Landing = () => {
 
 
             <div className="landing__courses">
-                {/* COURSES DISPLAY */}
+                {courses?.slice(0, 4).map((course, index) => (
+                    <motion.div
+                        key={course.courseId}
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: index * 0.2 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                    >
+                        <CourseCardSearch course={course} />
+                    </motion.div>
+                ))}
             </div>
 
         </motion.div>
